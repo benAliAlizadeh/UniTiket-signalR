@@ -1,0 +1,32 @@
+.bd-callout {
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #e9ecef;
+    border-left-width: 0.25rem;
+    border-radius: 0.25rem;
+}
+.bdr-callout {
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #e9ecef;
+    border-right-width: 0.25rem;
+    border-radius: 0.25rem;
+}
+.bd-callout-info {
+    border-left-color: #5bc0de;
+}
+.bd-callout-info {
+    border-left-color: #258dfd;
+}
+.bdr-callout-primary {
+    border-right-color: #5bc0de;
+}
+
+.bdr-callout-warning {
+    border-right-color: yellow;
+}
+.bd-callout .bd-callout {
+    margin-top: -0.25rem;
+}

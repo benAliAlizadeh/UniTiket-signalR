@@ -1,0 +1,59 @@
+﻿@model CTiketViewModel
+@{
+    ViewData["Title"] = "CreateTiket";
+}
+
+<main class="form-signin w-100 m-auto">
+    <form asp-action="CreateTiket">
+        <h1 class="h3 mb-3 fw-normal">Create Tiket</h1>
+
+        <select asp-for="Category" class="form-select" aria-label="Default select example">
+            @foreach (var item in Model.Categories)
+            {
+                bool i = true;
+                if (true)
+                {
+                    <option value="@item.CategoryId" selected>@item.Name</option>
+                    i = false;
+                }
+                else
+                {
+                    <option value="@item.CategoryId">@item.Name</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="Category" class="text-danger"></span>
+
+
+        <br />
+
+        <div class="form-floating mt-2">
+            <input asp-for="Title" type="text" class="form-control" placeholder="amirpourhassan">
+            <label>Title</label>
+
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="">
+            <textarea asp-for="Text" type="text" class="form-control" rows="4" placeholder="Message"></textarea>
+
+            <span asp-validation-for="Text" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="row">
+             <div class="col-6">
+                <a class="w-100 btn btn-lg btn-outline-dark" href="/">Back</a>
+            </div>
+            <div class="col-6">
+                <button class="w-100 btn btn-lg btn-outline-danger" type="submit">Submit</button>
+            </div>
+        </div>
+
+    </form>
+</main>
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
