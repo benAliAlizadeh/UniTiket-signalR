@@ -17,6 +17,8 @@ namespace UniTiKet_Model
         public string Title { get; set; }
         public DateTime CreatedTime { get; set; }
 
+        public bool IsFinaly { get; set; }
+
         public int UserId { get; set; }
         public int CategoryId { get; set; }
 

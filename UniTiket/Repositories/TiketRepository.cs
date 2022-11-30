@@ -45,5 +45,21 @@ namespace UniTiket.Repositories
         public async Task<Tiket?> GetTiketById(int id) => await _context.Tikets
             .Include(c=> c.User)
             .FirstOrDefaultAsync(c=> c.TiketId == id);
+
+        public async Task<List<TiketViewModel>> GetAdminTiketsAsync(int categoryId) => await _context.Tikets
+          .Include(c => c.Messages)
+          .Where(c=> c.CategoryId == categoryId)
+          .Select(c => new TiketViewModel()
+          {
+              TiketId = c.TiketId,
+              CategoryId = c.CategoryId,
+              CreatedTime = c.CreatedTime,
+              Title = c.Title,
+              UserId = c.UserId,
+              LastMessage = c.Messages.OrderByDescending(c => c.CreatedTime).FirstOrDefault().Text,
+              MessageCount = c.Messages.Count()
+          })
+          .OrderByDescending(c => c.CreatedTime)
+          .ToListAsync();
     }
 }

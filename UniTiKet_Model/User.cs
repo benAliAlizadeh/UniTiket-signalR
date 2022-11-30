@@ -20,6 +20,8 @@ namespace UniTiKet_Model
 
         public bool IsAdmin { get; set; }
 
+        public int? CategoryId { get; set; }
+
         public List<Tiket> Tikets { get; set; }
     }
 }

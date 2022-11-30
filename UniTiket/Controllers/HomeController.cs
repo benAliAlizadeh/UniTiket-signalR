@@ -44,16 +44,26 @@ namespace UniTiket.Controllers
         [Route("/{id?}")]
         public async Task<IActionResult> Index(int id)
         {
+            int userId = GetUserId();
+            var user = await _db.FindByIdAsync(userId);
             List<TiketViewModel> tikets = new();
 
             if (IsAdmin())
             {
-                tikets = await _tr.GetAllTiketsAsync();
-                id = (id > 0) ? id : tikets.FirstOrDefault().TiketId;
+                if(user.CategoryId > 0)
+                {
+                    tikets = await _tr.GetAdminTiketsAsync((int)user.CategoryId);
+                    id = (id > 0) ? id : tikets.FirstOrDefault().TiketId;
+                }
+                else
+                {
+                    tikets = await _tr.GetAllTiketsAsync();
+                    id = (id > 0) ? id : tikets.FirstOrDefault().TiketId;
+                }
+           
             }
             else
             {
-                int userId = GetUserId();
 
                 tikets = await _tr.GetTiketsAsync(userId);
 

@@ -9,5 +9,7 @@ namespace UniTiket.Repositories
         Task<List<TiketViewModel>> GetAllTiketsAsync();
 
         Task<Tiket?> GetTiketById(int id);
+
+        Task<List<TiketViewModel>> GetAdminTiketsAsync(int categoryId);
     }
 }

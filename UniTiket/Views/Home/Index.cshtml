@@ -2,7 +2,7 @@
 @{
     string username = User.Identity.Name;
     bool isAdmin = User.IsInRole("Admin");
-    ViewData["Title"] = (isAdmin)? "Admin Page" : "Home Page";
+    ViewData["Title"] = (isAdmin) ? "Admin Page" : "Home Page";
 
 }
 
@@ -17,7 +17,7 @@
 else
 {
     <div class="d-inline-flex mb-1  mx-2">
-        <a href="/Home/CreateTiket" class="btn btn-outline-success" id="back-to-contacts" style="border-radius: 0 0.25rem 0.25rem 0 ">+ Tiket</a>
+        <a href="/Home/CreateTiket" class="btn btn-outline-success" id="back-to-contacts" style="border-radius:0.25rem; ">+ Tiket</a>
     </div>
 }
 
@@ -46,9 +46,20 @@ else
 
     <div class="col-md-8">
 
-        <div class="card" style="height:400px;border-radius: 0.25rem 0.25rem 0 0;" id="messages">
+        <div class="card" style="height:400px;border-radius: 0.25rem;" id="messages">
             <div class="card-header">
-                @Model.Tiket.Title
+                <div class="row">
+                    <div class="col-6 mt-2">
+                        @Model.Tiket.Title
+                    </div>
+                    <div class="col-6">
+                        @if (!Model.Tiket.IsFinaly)
+                        {
+                            <a href="" class="btn btn-outline-warning" title="move tiket">🔃</a>
+                            <a href="" class="btn btn-outline-dark" title="Is Finaly">🚪</a>
+                        }
+                    </div>
+                </div>
             </div>
             <div id="messagesdiv" class="card-body" style="overflow: overlay">
 
@@ -61,9 +72,9 @@ else
                             <div class="col-md-8">
                                 <div class="bdr-callout bdr-callout-primary">
                                     <span class="fw-semibold">@((isAdmin)? Model.Tiket.User.UserName : username)</span>
-                                    <p>@item.Text</p>
+                                    <p class="mt-1">@item.Text</p>
 
-                                    <span style="font-size:small">@item.CreatedTime</span>
+                                    <span style="font-size:10px;">@item.CreatedTime</span>
                                 </div>
                             </div>
                         </div>
@@ -87,13 +98,22 @@ else
             </div>
 
         </div>
-        <form id="MessageForm" class="card-footer d-inline-flex" style="width: -webkit-fill-available;">
-            <textarea id="messageTextBox" class="form-control" placeholder="message" style="max-height:95px;height:95px;border-radius:0 0 0 0.25rem"></textarea>
-            <input type="hidden" value="@ViewBag.tiketId" />
-            <input type="hidden" value="@((isAdmin)? 1 : 0)" />
+        @if (!Model.Tiket.IsFinaly)
+        {
+            <div class="card-footer">
+                <label>⚠️This Tiket is finaly</label>
+            </div>
+        }
+        else
+        {
+            <form id="MessageForm" class="card-footer d-inline-flex mt-1" style="width: -webkit-fill-available;">
+                <textarea id="messageTextBox" class="form-control" placeholder="message" style="max-height:75px;height:75px;border-radius:0.25rem 0 0 0.25rem;"></textarea>
+                <input type="hidden" value="@ViewBag.tiketId" />
+                <input type="hidden" value="@((isAdmin)? 1 : 0)" />
 
-            <button type="submit" class="btn btn-outline-success" style="border-radius: 0 0 0.25rem 0 ">send</button>
-        </form>
+                <button type="submit" class="btn btn-outline-info" style="border-radius: 0 0.25rem 0.25rem 0;">⤴️</button>
+            </form>
+        }
     </div>
 
 </div>
