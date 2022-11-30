@@ -1,0 +1,58 @@
+﻿@model ETiketViewModel
+@{
+    ViewData["Title"] = "Manage Tiket";
+}
+
+<main class="form-signin w-100 m-auto">
+    <form asp-action="EditTiket">
+        <h1 class="h3 mb-3 fw-normal">Manage Tiket</h1>
+
+        <input asp-for="TiketId" type="hidden" />
+
+        <select asp-for="Category" class="form-select" aria-label="Default select example">
+            @foreach (var item in Model.Categories)
+            {
+                if (item.CategoryId == int.Parse(Model.Category))
+                {
+                    <option value="@item.CategoryId" selected>@item.Name</option>
+                }
+                else
+                {
+                    <option value="@item.CategoryId">@item.Name</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="Category" class="text-danger"></span>
+
+
+        <br />
+
+        <div class="form-floating mt-2">
+            <input asp-for="Title" type="text" class="form-control" placeholder="amirpourhassan">
+            <label>Title</label>
+
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="checkbox mt-2">
+            <input asp-for="IsFinaly" type="checkbox"> IsFinaly
+
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-6">
+                <a class="w-100 btn btn-lg btn-outline-dark" href="/">Back</a>
+            </div>
+            <div class="col-6">
+                <button class="w-100 btn btn-lg btn-outline-danger" type="submit">Submit</button>
+            </div>
+        </div>
+
+    </form>
+</main>
+
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+

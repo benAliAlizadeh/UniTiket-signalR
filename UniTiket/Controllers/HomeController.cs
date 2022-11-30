@@ -50,7 +50,7 @@ namespace UniTiket.Controllers
 
             if (IsAdmin())
             {
-                if(user.CategoryId > 0)
+                if (user.CategoryId > 0)
                 {
                     tikets = await _tr.GetAdminTiketsAsync((int)user.CategoryId);
                     id = (id > 0) ? id : tikets.FirstOrDefault().TiketId;
@@ -60,7 +60,7 @@ namespace UniTiket.Controllers
                     tikets = await _tr.GetAllTiketsAsync();
                     id = (id > 0) ? id : tikets.FirstOrDefault().TiketId;
                 }
-           
+
             }
             else
             {
@@ -73,7 +73,7 @@ namespace UniTiket.Controllers
                 }
                 id = (id > 0) ? id : tikets.FirstOrDefault().TiketId;
             }
-            
+
 
             var tiket = await _tr.GetTiketById(id);
 
@@ -110,6 +110,7 @@ namespace UniTiket.Controllers
             });
         }
 
+        [Authorize]
         public async Task<IActionResult> CreateTiket()
         {
             return View(new CTiketViewModel()
@@ -121,9 +122,10 @@ namespace UniTiket.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTiket(CTiketViewModel model)
         {
-            model.Categories = await GetCategories();
             if (!ModelState.IsValid)
             {
+                model.Categories = await GetCategories();
+
                 return View(model);
             }
 
@@ -149,7 +151,49 @@ namespace UniTiket.Controllers
         }
         async Task<List<Category>> GetCategories() => (await _cr.GetAllAsync()).ToList();
 
+        [Authorize]
+        public async Task<IActionResult> EditTiket(int id)
+        {
+            var tiket = await _tr.GetTiketById(id);
+            return View(new ETiketViewModel()
+            {
+                Categories = await GetCategories(),
+                Category = tiket.CategoryId.ToString(),
+                IsFinaly = tiket.IsFinaly,
+                Title = tiket.Title,
+                TiketId = tiket.TiketId
+            });
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> EditTiket(ETiketViewModel model)
+        {
+            var tiket = await _tr.GetTiketById(model.TiketId);
+
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await GetCategories();
+
+                model.TiketId = tiket.TiketId;
+                model.Title = model.Title;
+                model.Category = tiket.CategoryId.ToString();
+                model.IsFinaly = tiket.IsFinaly;
+
+                return View(model);
+            }
+
+            tiket.Title = model.Title;
+            tiket.IsFinaly=model.IsFinaly;
+            tiket.CategoryId = int.Parse(model.Category);
+
+            await _tr.UpdateAsync(tiket);
+
+            await _tr.SaveChangesAsync();
+
+
+
+            return Redirect($"/{tiket.TiketId}");
+        }
 
 
         #region Account
