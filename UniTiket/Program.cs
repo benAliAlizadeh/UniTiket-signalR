@@ -37,6 +37,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ITiketRepository, TiketRepository>();
+builder.Services.AddScoped<IChatRoomService, ChatRoomService>();
+//builder.Services.AddScoped<IChatHub, ChatHub>();
 
 var app = builder.Build();
 

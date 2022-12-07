@@ -5,7 +5,7 @@
     ViewData["Title"] = (isAdmin) ? "Admin Page" : "Home Page";
 
 }
-
+<input type="hidden" id="tiketId" value="@ViewBag.tiketId"/>
 <button class="btn btn-outline-info mb-1 mx-2 d-block d-md-none" id="back-to-contacts">back to contacts</button>
 @if (isAdmin)
 {

@@ -8,6 +8,7 @@ using UniTiket.Models;
 using UniTiket.Repositories;
 using UniTiKet_Model;
 using Microsoft.AspNetCore.Authorization;
+using UniTiket.Tools;
 
 namespace UniTiket.Controllers
 {
@@ -44,6 +45,7 @@ namespace UniTiket.Controllers
         [Route("/{id?}")]
         public async Task<IActionResult> Index(int id)
         {
+            
             int userId = GetUserId();
             var user = await _db.FindByIdAsync(userId);
             List<TiketViewModel> tikets = new();
@@ -286,8 +288,6 @@ namespace UniTiket.Controllers
         }
 
         #endregion
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

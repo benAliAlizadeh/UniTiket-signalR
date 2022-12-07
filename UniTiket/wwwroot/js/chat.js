@@ -10,7 +10,17 @@ connection.on('ReciveMessage', renderMessage);
 
 connection.start();
 
-function ready() {
+
+var tiketId = document.getElementById('tiketId').value;
+
+//$.ajax({
+//    method: "POST",
+//    url: "/home/SetGroup?tiketId=" + tiketId
+//});
+
+
+function ready() { 
+
     var MessageForm = document.getElementById('MessageForm');
     MessageForm.addEventListener('submit',
         function (e) {
@@ -25,6 +35,11 @@ function sendMessage(text, tiketId, isAnser) {
     if (text && text.length) {
         connection.invoke('SendMessage', tiketId, text, isAnser);
     }
+}
+
+function setRoom(id) {
+    connection.invoke('SetName', id);
+    //connection.invoke('SendMessage', '111', 'dfdh', '0');
 }
 
 function renderMessage(name, time, message, isAnser) {
@@ -49,4 +64,3 @@ function renderMessage(name, time, message, isAnser) {
 }
 
 document.addEventListener('DOMContentLoaded', ready);
-

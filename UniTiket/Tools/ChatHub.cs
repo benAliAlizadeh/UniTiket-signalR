@@ -3,19 +3,29 @@ using UniTiket.Repositories;
 
 namespace UniTiket.Tools
 {
+    public interface IChatHub
+    {
+        Task SetName(string tiketId);
+    }
+
     public class ChatHub : Hub
     {
         private readonly HttpContext _httpContext;
         private readonly IMessageRepository _mr;
-        public ChatHub(IHttpContextAccessor httpContext, IMessageRepository mr)
+        private readonly IChatRoomService _chatRoomService;
+        public ChatHub(IHttpContextAccessor httpContext, IMessageRepository mr, IChatRoomService chatRoomService)
         {
             _httpContext = httpContext.HttpContext;
             _mr = mr;
+            _chatRoomService = chatRoomService;
         }
 
         public override async Task OnConnectedAsync()
         {
-           // await Clients.All.SendAsync("ReciveMessage", "amir", DateTime.Now, "jgjjgyjhfgvdcsfsef");
+            //var tiketId = (_httpContext.Request.Query["token"]).ToString();
+
+            #region comments
+            // await Clients.All.SendAsync("ReciveMessage", "amir", DateTime.Now, "jgjjgyjhfgvdcsfsef");
 
             //int userId = int.Parse(_httpContext.User.FindFirst("UserId").Value);
             //if (!await _gr.HasAnyChat(userId))
@@ -42,11 +52,16 @@ namespace UniTiket.Tools
             //     message.CreatedTime,
             //     message.Text);
             //}
+            #endregion
 
-            //await base.OnConnectedAsync();
+            await base.OnConnectedAsync();
         }
         public async Task SendMessage(string tiketId, string text, string isAnser = "0")
         {
+            //add user group
+            await Groups.AddToGroupAsync(Context.ConnectionId, tiketId);
+
+            //save msg
             var msg = await _mr.AddAsync(new()
             {
                 TiketId = int.Parse(tiketId),
@@ -56,7 +71,8 @@ namespace UniTiket.Tools
             });
             await _mr.SaveChangesAsync();
 
-            await Clients.All.SendAsync("ReciveMessage", _httpContext.User.Identity.Name, msg.CreatedTime, msg.Text, msg.IsAnser);
+            //send msg
+            await Clients.Group(tiketId).SendAsync("ReciveMessage", _httpContext.User.Identity.Name, msg.CreatedTime, msg.Text, msg.IsAnser);
         }
     }
 }
