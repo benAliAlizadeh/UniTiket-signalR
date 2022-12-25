@@ -12,12 +12,10 @@ namespace UniTiket.Tools
     {
         private readonly HttpContext _httpContext;
         private readonly IMessageRepository _mr;
-        private readonly IChatRoomService _chatRoomService;
-        public ChatHub(IHttpContextAccessor httpContext, IMessageRepository mr, IChatRoomService chatRoomService)
+        public ChatHub(IHttpContextAccessor httpContext, IMessageRepository mr)
         {
             _httpContext = httpContext.HttpContext;
             _mr = mr;
-            _chatRoomService = chatRoomService;
         }
 
         public override async Task OnConnectedAsync()
