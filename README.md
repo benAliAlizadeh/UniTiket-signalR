@@ -82,10 +82,6 @@ Follow these steps to set up and run the project:
 
 Contributions are welcome! Feel free to submit Issues or Pull Requests to improve the project.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Persian Description (توضیحات فارسی)
 
 این پروژه یه سیستم بلیط‌گذاری آنلاینه که برای یه پروژه دانشگاهی با .NET 6 ساخته شده. از SignalR برای به‌روزرسانی‌های بلادرنگ و چت، و از Entity Framework Core برای مدیریت پایگاه داده استفاده می‌کنه. با SQL Server کار می‌کنه و رابط کاربری پاسخگویی داره. می‌تونید بلیط بسازید، مدیریت کنید و به‌صورت بلادرنگ با بقیه کاربرا چت کنید. برای اطلاعات بیشتر، بخش‌های بالا رو بخونید یا با من تماس بگیرید.
